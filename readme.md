@@ -1,3 +1,4 @@
+# Streaming mode for short audio recognition (speech-to-text)
 
 Set the `FOLDER_ID`, `IAM_TOKEN` variables and specify the path to the audio file in the arguments:
 
