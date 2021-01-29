@@ -63,7 +63,6 @@ func send(spec *stt.RecognitionSpec, recStream stt.SttService_StreamingRecognize
 			if err != io.EOF {
 				return err
 			}
-			fmt.Printf("end of file\n")
 			if err = recStream.CloseSend(); err != nil {
 				return err
 			}
@@ -125,7 +124,7 @@ func main() {
 		PartialResults:  true,
 	}
 
-	fatalErrors := make(chan error, 1)
+	fatalErrors := make(chan error)
 	go func() {
 		if err := send(spec, recStream); err != nil {
 			fatalErrors <- err
@@ -137,7 +136,6 @@ func main() {
 		}
 	}()
 
-	stop := time.NewTimer(time.Second * 3)
 Loop:
 	for {
 		select {
@@ -150,8 +148,6 @@ Loop:
 			if rsp.Chunks[0].Final {
 				break Loop
 			}
-		case <-stop.C:
-			break Loop
 		case err := <-fatalErrors:
 			log.Fatal(err)
 		}
