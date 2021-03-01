@@ -56,8 +56,8 @@ func send(spec *stt.RecognitionSpec, recStream stt.SttService_StreamingRecognize
 	}
 	defer file.Close()
 
-	buffer := make([]byte, bufferSize)
 	for {
+		buffer := make([]byte, bufferSize)
 		_, err := file.Read(buffer)
 		if err != nil {
 			if err != io.EOF {
@@ -71,12 +71,10 @@ func send(spec *stt.RecognitionSpec, recStream stt.SttService_StreamingRecognize
 
 		reqCont := &stt.StreamingRecognitionRequest_AudioContent{AudioContent: buffer}
 		request := &stt.StreamingRecognitionRequest{StreamingRequest: reqCont}
-
 		err = recStream.Send(request)
 		if err != nil {
 			return err
 		}
-
 		time.Sleep(time.Millisecond * frequency)
 	}
 
@@ -152,6 +150,5 @@ Loop:
 			log.Fatal(err)
 		}
 	}
-
 	cancel()
 }
