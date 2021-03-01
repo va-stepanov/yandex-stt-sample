@@ -11,7 +11,6 @@ Start chunk: alternative: прив
 Is final: false
 Start chunk: alternative: привет ми
 Is final: false
-end of file
 Start chunk: alternative: Привет мир
 Is final: true
 ```
